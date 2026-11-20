@@ -11,7 +11,11 @@
   <meta property="og:type" content="website">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@500;600;700&display=swap" rel="stylesheet">
+  <script>
+    document.documentElement.classList.add("js");
+    if (/\bpreview\b/.test(location.search)) document.documentElement.classList.add("is-preview");
+  </script>
   <style>
     :root {
       --bg: #F7F3ED;
@@ -21,13 +25,11 @@
       --line: #D9CBB8;
       --wood: #C4A882;
       --ph: #E6E1DA;
-      --ph-text: #8A847C;
       --btn: #1A1714;
       --btn-text: #FFFCF7;
-      --btn-line: #1A1714;
-      --shadow: 0 10px 30px rgba(26, 23, 20, 0.06);
       --serif: "Noto Serif TC", "Noto Serif CJK TC", "Source Han Serif TC", "Songti TC", serif;
       --sans: "Noto Sans TC", "Noto Sans CJK TC", "Source Han Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -39,70 +41,88 @@
       line-height: 1.7;
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
+      overflow-x: hidden;
     }
     a { color: inherit; }
+    img { max-width: 100%; }
+    button { font: inherit; color: inherit; }
 
     .page {
-      max-width: 480px;
+      max-width: 520px;
       margin: 0 auto;
       background: var(--bg);
       min-height: 100vh;
+      overflow-x: hidden;
     }
-    @media (min-width: 520px) {
+    @media (min-width: 560px) {
       body { padding: 40px 0 64px; }
       .page { box-shadow: 0 16px 60px rgba(26, 23, 20, 0.1); }
     }
 
     /* Hero */
     .hero { position: relative; }
+    .hero-frame {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 1510 / 1205;
+      background: #2a2420;
+    }
     .hero-photo {
       width: 100%;
-      height: auto;
-      display: block;
+      height: 100%;
+      object-fit: cover;
+      object-position: 50% 42%;
+      transform: scale(1);
+      transform-origin: 50% 42%;
+      animation: kenburns 12s ease-out forwards;
+    }
+    @keyframes kenburns {
+      from { transform: scale(1); }
+      to { transform: scale(1.08); }
     }
     .hero-copy {
-      padding: 32px 24px 8px;
+      padding: 40px 28px 12px;
       text-align: center;
     }
     .hero-copy h1 {
       font-family: var(--serif);
       font-weight: 700;
-      font-size: 2rem;
-      letter-spacing: 0.12em;
+      font-size: 2.05rem;
+      letter-spacing: 0.14em;
       line-height: 1.3;
       color: var(--ink);
     }
     .hero-copy .en {
       display: block;
-      margin-top: 6px;
+      margin-top: 8px;
       font-family: var(--sans);
       font-weight: 500;
-      font-size: 0.72rem;
-      letter-spacing: 0.22em;
+      font-size: 0.7rem;
+      letter-spacing: 0.28em;
       color: var(--muted);
       text-transform: uppercase;
     }
     .hero-copy .lead {
-      margin-top: 16px;
-      font-size: 0.98rem;
-      font-weight: 400;
-      letter-spacing: 0.04em;
-      color: var(--muted);
+      margin-top: 22px;
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: 1.02rem;
+      letter-spacing: 0.08em;
+      line-height: 1.8;
+      color: var(--ink);
     }
     .wood {
-      height: 8px;
-      margin-top: 28px;
+      height: 6px;
+      margin-top: 36px;
       background:
         linear-gradient(90deg,
           #d8c4a4 0%, #c4a882 18%, #e2d0b4 36%,
           #c9ae8a 54%, #d6c09c 72%, #be9e78 86%, #d8c4a4 100%);
     }
 
-
-
     /* Buttons */
     .actions {
-      padding: 28px 24px 8px;
+      padding: 36px 28px 8px;
       display: flex;
       flex-direction: column;
       gap: 12px;
@@ -121,7 +141,9 @@
       letter-spacing: 0.06em;
       text-align: center;
       line-height: 1.35;
-      transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease;
+      transition: transform 0.2s var(--ease), background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
     }
     .btn svg { flex: 0 0 auto; }
     .btn-solid {
@@ -137,37 +159,65 @@
     .btn-solid:hover { background: #2c2824; }
     .btn-outline:hover { background: var(--ink); color: var(--btn-text); }
 
-    /* Sections */
-    .section {
-      padding: 40px 24px 8px;
+    .btn-line {
+      animation: line-pulse 4.8s ease-in-out 1.6s infinite;
     }
-    .section h2 {
+    @keyframes line-pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(196, 168, 130, 0); }
+      50% { box-shadow: 0 0 0 6px rgba(196, 168, 130, 0.16), 0 0 28px 2px rgba(196, 168, 130, 0.35); }
+    }
+
+    /* Sections */
+    .section { padding: 64px 28px 16px; }
+    .section-head {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+    .section-head .idx {
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      color: var(--wood);
+    }
+    .section-head h2 {
       font-family: var(--serif);
       font-weight: 700;
-      font-size: 0.82rem;
-      letter-spacing: 0.28em;
-      color: var(--wood);
+      font-size: 0.86rem;
+      letter-spacing: 0.32em;
+      color: var(--ink);
       text-align: center;
-      margin-bottom: 20px;
     }
+    .section-head .hairline {
+      width: 32px;
+      height: 1px;
+      background: var(--wood);
+      opacity: 0.8;
+      margin-top: 4px;
+    }
+
     .intro {
       font-family: var(--serif);
       font-size: 0.98rem;
-      font-weight: 600;
+      font-weight: 500;
       letter-spacing: 0.06em;
-      line-height: 2;
+      line-height: 2.15;
       color: var(--ink);
-      text-align: justify;
     }
+    .intro .line { display: block; }
 
     .poems {
-      padding: 24px 28px 16px;
+      padding: 48px 28px 16px;
       text-align: center;
     }
     .poem {
-      margin: 48px auto 0;
+      margin: 0 auto;
       max-width: 22em;
     }
+    .poem + .poem-rule + .poem { margin-top: 0; }
     .poem h3 {
       font-family: var(--serif);
       font-weight: 700;
@@ -186,46 +236,85 @@
       margin: 0 0.08em;
       vertical-align: 0.18em;
     }
-    .poem p {
+    .poem .verse {
       font-family: var(--serif);
       font-weight: 600;
       font-size: 0.95rem;
       letter-spacing: 0.14em;
-      line-height: 2.25;
+      line-height: 2.35;
       color: var(--ink);
     }
-    .poem p + p { margin-top: 1.75em; }
+    .poem .verse + .verse { margin-top: 1.75em; }
+    .poem .verse .line { display: block; }
     .poem-rule {
-      width: 48px;
+      width: 40px;
       height: 1px;
-      margin: 56px auto 0;
+      margin: 56px auto;
       background: var(--wood);
       opacity: 0.7;
     }
 
-    /* Works */
+    /* Works — editorial */
     .works {
       padding-left: 0;
       padding-right: 0;
-      padding-bottom: 0;
+      padding-bottom: 8px;
     }
-    .works h2 { padding: 0 24px; }
-    .works-stack {
+    .works .section-head { padding: 0 28px; }
+    .works-editorial {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 28px;
+      padding: 8px 0 12px;
     }
-    .works-stack img {
+    .work { margin: 0; }
+    .work-open {
+      display: block;
+      width: 100%;
+      padding: 0;
+      border: 0;
+      background: none;
+      cursor: zoom-in;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    .work img {
       width: 100%;
       height: auto;
       display: block;
       background: var(--ph);
+      transform: scale(1);
+      box-shadow: 0 0 0 rgba(26, 23, 20, 0);
+      transition: transform 0.55s var(--ease), box-shadow 0.55s var(--ease);
+    }
+    @media (hover: hover) {
+      .work-open:hover img {
+        transform: scale(1.04);
+        box-shadow: 0 18px 40px rgba(26, 23, 20, 0.18);
+      }
+    }
+    .work-open:active img {
+      transform: scale(1.04);
+      box-shadow: 0 18px 40px rgba(26, 23, 20, 0.18);
+    }
+    .work--full { width: 100%; }
+    .work--portrait {
+      width: 74%;
+      margin: 8px 20px 8px auto;
+    }
+    .work--inset-end {
+      width: 88%;
+      margin-left: auto;
+    }
+    .work--inset-start {
+      width: 88%;
+      margin-right: auto;
     }
 
-    .footer-actions { padding-top: 16px; padding-bottom: 16px; }
+    .footer-actions { padding-top: 28px; padding-bottom: 16px; }
 
     footer {
-      padding: 32px 24px calc(36px + env(safe-area-inset-bottom));
+      padding: 40px 28px calc(40px + env(safe-area-inset-bottom));
       text-align: center;
     }
     footer .site {
@@ -241,21 +330,94 @@
       letter-spacing: 0.16em;
       color: var(--muted);
     }
+
+    /* Reveals — only hide when JS is available */
+    html.js .reveal {
+      opacity: 0;
+      transform: translate3d(0, 1.15em, 0);
+      transition: opacity 0.95s var(--ease), transform 0.95s var(--ease);
+      transition-delay: var(--delay, 0ms);
+    }
+    html.js .reveal.is-in,
+    html.is-preview .reveal,
+    html.js.no-motion .reveal {
+      opacity: 1;
+      transform: none;
+    }
+
+    html.is-preview .hero-photo {
+      animation: none;
+      transform: scale(1.08);
+    }
+
+    /* Lightbox */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 40;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      padding: max(24px, env(safe-area-inset-top)) max(24px, env(safe-area-inset-right)) max(24px, env(safe-area-inset-bottom)) max(24px, env(safe-area-inset-left));
+      background: rgba(26, 23, 20, 0.92);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.35s ease, visibility 0.35s ease;
+      cursor: zoom-out;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .lightbox.is-open {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+    .lightbox img {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      box-shadow: 0 12px 48px rgba(0, 0, 0, 0.35);
+    }
+    body.is-locked { overflow: hidden; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero-photo,
+      .btn-line { animation: none; }
+      .hero-photo { transform: none; }
+      html.js .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+      .work img { transition: none; }
+      .work-open:hover img,
+      .work-open:active img {
+        transform: none;
+        box-shadow: none;
+      }
+      .lightbox { transition: none; }
+      html { scroll-behavior: auto; }
+    }
   </style>
 </head>
 <body>
   <div class="page">
     <header class="hero">
-      <img class="hero-photo" src="img/hero.jpg" alt="花山紙紮作品">
+      <div class="hero-frame">
+        <img class="hero-photo" src="img/hero.jpg" alt="花山紙紮" width="1510" height="1205">
+      </div>
       <div class="hero-copy">
-        <h1>花山紙紮設計<span class="en">Design Kazan</span></h1>
-        <p class="lead">用心，做最能表達心意的紙紮。</p>
+        <h1 class="reveal" style="--delay: 80ms">花山紙紮設計<span class="en">Design Kazan</span></h1>
+        <p class="lead reveal" style="--delay: 220ms">用心，做最能表達心意的紙紮。</p>
       </div>
       <div class="wood" aria-hidden="true"></div>
     </header>
 
     <nav class="actions" aria-label="快速連結">
-      <a class="btn btn-solid" href="https://line.me/ti/p/gZhrVECfop">
+      <a class="btn btn-solid btn-line" href="https://line.me/ti/p/gZhrVECfop">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3C6.48 3 2 6.7 2 11.2c0 4.02 3.57 7.38 8.4 8.05.33.07.77.22.88.5.1.26.07.66.03.92l-.14.85c-.04.26-.2 1.02.89.56 1.09-.46 5.88-3.46 8.02-5.92C21.48 14.5 22 12.92 22 11.2 22 6.7 17.52 3 12 3z"/></svg>
         加 LINE｜聊聊客製與合作
       </a>
@@ -270,32 +432,84 @@
     </nav>
 
     <section class="section" id="about">
-      <h2>我們的故事</h2>
-      <p class="intro">花山在紙紮業已服務了10年，專注於紙紮設計與生產，為能更完善幫大眾完成對親屬的思念，花山專業紙紮客製名店由此而生。</p>
+      <header class="section-head">
+        <span class="idx reveal">01</span>
+        <h2 class="reveal" style="--delay: 140ms">我們的故事</h2>
+        <span class="hairline" aria-hidden="true"></span>
+      </header>
+      <div class="intro">
+        <span class="line reveal" style="--delay: 0ms">花山在紙紮業已服務了10年，</span>
+        <span class="line reveal" style="--delay: 150ms">專注於紙紮設計與生產，</span>
+        <span class="line reveal" style="--delay: 300ms">為能更完善幫大眾完成對親屬的思念，</span>
+        <span class="line reveal" style="--delay: 450ms">花山專業紙紮客製名店由此而生。</span>
+      </div>
     </section>
 
-    <section class="poems" aria-label="花山">
+    <section class="poems" aria-label="花山" id="poems">
+      <header class="section-head">
+        <span class="idx reveal">02</span>
+        <span class="hairline" aria-hidden="true"></span>
+      </header>
       <article class="poem">
-        <h3><span class="mark" aria-hidden="true">｜</span>花<span class="mark" aria-hidden="true">｜</span></h3>
-        <p>若花有期，生生不息。<br>逝者魂身無垢安然，<br>親屬致意送行彼岸。</p>
-        <p>寧馨一裁，萬縷華燦，<br>藉物寄情，祈願芬芳常伴。</p>
+        <h3 class="reveal"><span class="mark" aria-hidden="true">｜</span>花<span class="mark" aria-hidden="true">｜</span></h3>
+        <p class="verse">
+          <span class="line reveal" style="--delay: 140ms">若花有期，生生不息。</span>
+          <span class="line reveal" style="--delay: 290ms">逝者魂身無垢安然，</span>
+          <span class="line reveal" style="--delay: 440ms">親屬致意送行彼岸。</span>
+        </p>
+        <p class="verse">
+          <span class="line reveal" style="--delay: 160ms">寧馨一裁，萬縷華燦，</span>
+          <span class="line reveal" style="--delay: 310ms">藉物寄情，祈願芬芳常伴。</span>
+        </p>
       </article>
       <div class="poem-rule" aria-hidden="true"></div>
       <article class="poem">
-        <h3><span class="mark" aria-hidden="true">｜</span>山<span class="mark" aria-hidden="true">｜</span></h3>
-        <p>風輕雲淡，青山常在。<br>沉穩莊嚴，容納萬物生機，<br>俯仰曠達，契入造化之間。</p>
+        <h3 class="reveal"><span class="mark" aria-hidden="true">｜</span>山<span class="mark" aria-hidden="true">｜</span></h3>
+        <p class="verse">
+          <span class="line reveal" style="--delay: 140ms">風輕雲淡，青山常在。</span>
+          <span class="line reveal" style="--delay: 290ms">沉穩莊嚴，容納萬物生機，</span>
+          <span class="line reveal" style="--delay: 440ms">俯仰曠達，契入造化之間。</span>
+        </p>
       </article>
     </section>
 
     <section class="section works" id="works">
-      <h2>作品</h2>
-      <div class="works-stack">
-        <img src="img/work1.jpg" alt="花山紙紮作品">
-        <img src="img/work2.jpg" alt="花山紙紮作品">
-        <img src="img/work3.jpg" alt="花山紙紮作品">
-        <img src="img/work4.jpg" alt="花山紙紮作品">
-        <img src="img/work5.jpg" alt="花山紙紮作品">
-        <img src="img/work6.jpg" alt="花山紙紮作品">
+      <header class="section-head">
+        <span class="idx reveal">03</span>
+        <h2 class="reveal" style="--delay: 140ms">作品</h2>
+        <span class="hairline" aria-hidden="true"></span>
+      </header>
+      <div class="works-editorial">
+        <figure class="work work--full reveal">
+          <button type="button" class="work-open" data-src="img/work1.jpg" aria-label="放大作品">
+            <img src="img/work1.jpg" alt="花山紙紮作品" width="1477" height="1108">
+          </button>
+        </figure>
+        <figure class="work work--portrait reveal">
+          <button type="button" class="work-open" data-src="img/work2.jpg" aria-label="放大作品">
+            <img src="img/work2.jpg" alt="花山紙紮作品" width="776" height="804">
+          </button>
+        </figure>
+        <figure class="work work--full reveal">
+          <button type="button" class="work-open" data-src="img/work3.jpg" aria-label="放大作品">
+            <img src="img/work3.jpg" alt="花山紙紮作品" width="1478" height="1108">
+          </button>
+        </figure>
+        <figure class="work work--inset-end reveal">
+          <button type="button" class="work-open" data-src="img/work4.jpg" aria-label="放大作品">
+            <img src="img/work4.jpg" alt="花山紙紮作品" width="1478" height="1108">
+          </button>
+        </figure>
+        <figure class="work work--full reveal">
+          <button type="button" class="work-open" data-src="img/work5.jpg" aria-label="放大作品">
+            <img src="img/work5.jpg" alt="花山紙紮作品" width="1478" height="1108">
+          </button>
+        </figure>
+        <figure class="work work--inset-start reveal">
+          <button type="button" class="work-open" data-src="img/work6.jpg" aria-label="放大作品">
+            <img src="img/work6.jpg" alt="花山紙紮作品" width="1478" height="1108">
+          </button>
+        </figure>
       </div>
     </section>
 
@@ -312,5 +526,64 @@
     </footer>
   </div>
 
+  <div class="lightbox" id="lightbox" hidden>
+    <img alt="花山紙紮作品">
+  </div>
+
+  <script>
+    (function () {
+      var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (reduce) document.documentElement.classList.add("no-motion");
+
+      if (!reduce && !document.documentElement.classList.contains("is-preview") && "IntersectionObserver" in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-in");
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.18, rootMargin: "0px 0px -6% 0px" });
+        document.querySelectorAll(".reveal").forEach(function (el) { io.observe(el); });
+      } else {
+        document.querySelectorAll(".reveal").forEach(function (el) { el.classList.add("is-in"); });
+      }
+
+      var box = document.getElementById("lightbox");
+      if (!box) return;
+      var boxImg = box.querySelector("img");
+      var lastFocus = null;
+
+      function openLight(src, alt) {
+        lastFocus = document.activeElement;
+        boxImg.src = src;
+        boxImg.alt = alt || "花山紙紮作品";
+        box.hidden = false;
+        requestAnimationFrame(function () { box.classList.add("is-open"); });
+        document.body.classList.add("is-locked");
+      }
+      function closeLight() {
+        box.classList.remove("is-open");
+        document.body.classList.remove("is-locked");
+        setTimeout(function () {
+          if (!box.classList.contains("is-open")) {
+            box.hidden = true;
+            boxImg.removeAttribute("src");
+          }
+        }, 360);
+        if (lastFocus && lastFocus.focus) lastFocus.focus();
+      }
+
+      document.querySelectorAll(".work-open").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          openLight(btn.getAttribute("data-src"), (btn.querySelector("img") || {}).alt);
+        });
+      });
+      box.addEventListener("click", closeLight);
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && box.classList.contains("is-open")) closeLight();
+      });
+    })();
+  </script>
 </body>
 </html>
