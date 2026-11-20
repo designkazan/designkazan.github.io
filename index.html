@@ -4,10 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>花山紙紮設計 Design Kazan</title>
-  <meta name="description" content="用文化與美感，做能表達心意的新形式紙紮。">
+  <meta name="description" content="用心，做最能表達心意的紙紮。">
   <meta name="theme-color" content="#F7F3ED">
   <meta property="og:title" content="花山紙紮設計 Design Kazan">
-  <meta property="og:description" content="用文化與美感，做能表達心意的新形式紙紮。">
+  <meta property="og:description" content="用心，做最能表達心意的紙紮。">
   <meta property="og:type" content="website">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -55,9 +55,10 @@
 
     /* Hero */
     .hero { position: relative; }
-    .hero .frame {
-      aspect-ratio: 4 / 5;
+    .hero-photo {
       width: 100%;
+      height: auto;
+      display: block;
     }
     .hero-copy {
       padding: 32px 24px 8px;
@@ -97,49 +98,7 @@
           #c9ae8a 54%, #d6c09c 72%, #be9e78 86%, #d8c4a4 100%);
     }
 
-    /* Photo frames */
-    .frame {
-      position: relative;
-      background: var(--ph);
-      overflow: hidden;
-    }
-    .frame img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: 1;
-      opacity: 0;
-      display: none;
-    }
-    .frame img.is-ok {
-      display: block;
-      opacity: 1;
-    }
-    .ph {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      color: var(--ph-text);
-      text-align: center;
-      padding: 16px;
-      pointer-events: none;
-    }
-    .ph-num {
-      font-weight: 700;
-      font-size: 1rem;
-      letter-spacing: 0.18em;
-    }
-    .ph-cat {
-      font-size: 0.78rem;
-      letter-spacing: 0.06em;
-      line-height: 1.5;
-    }
+
 
     /* Buttons */
     .actions {
@@ -245,22 +204,23 @@
     }
 
     /* Works */
-    .works-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+    .works {
+      padding-left: 0;
+      padding-right: 0;
+      padding-bottom: 0;
+    }
+    .works h2 { padding: 0 24px; }
+    .works-stack {
+      display: flex;
+      flex-direction: column;
       gap: 8px;
     }
-    .work .frame { aspect-ratio: 1 / 1; }
-    .work figcaption {
-      display: none;
-      margin: 8px 2px 16px;
-      font-size: 0.75rem;
-      letter-spacing: 0.08em;
-      color: var(--muted);
-      text-align: center;
-      line-height: 1.45;
+    .works-stack img {
+      width: 100%;
+      height: auto;
+      display: block;
+      background: var(--ph);
     }
-    .work:has(img.is-ok) figcaption { display: block; }
 
     .footer-actions { padding-top: 16px; padding-bottom: 16px; }
 
@@ -286,16 +246,10 @@
 <body>
   <div class="page">
     <header class="hero">
-      <div class="frame" data-photo="img/photo1.jpg">
-        <img src="img/photo1.jpg" alt="照片1 封面">
-        <div class="ph">
-          <span class="ph-num">照片1</span>
-          <span class="ph-cat">封面｜招牌紙紮屋橫幅</span>
-        </div>
-      </div>
+      <img class="hero-photo" src="img/hero.jpg" alt="花山紙紮作品">
       <div class="hero-copy">
         <h1>花山紙紮設計<span class="en">Design Kazan</span></h1>
-        <p class="lead">用文化與美感，做能表達心意的新形式紙紮。</p>
+        <p class="lead">用心，做最能表達心意的紙紮。</p>
       </div>
       <div class="wood" aria-hidden="true"></div>
     </header>
@@ -333,69 +287,15 @@
       </article>
     </section>
 
-    <section class="section" id="works">
+    <section class="section works" id="works">
       <h2>作品</h2>
-      <div class="works-grid">
-        <figure class="work">
-          <div class="frame" data-photo="img/photo2.jpg">
-            <img src="img/photo2.jpg" alt="照片2 招牌紙紮屋外觀">
-            <div class="ph">
-              <span class="ph-num">照片2</span>
-              <span class="ph-cat">招牌紙紮屋外觀</span>
-            </div>
-          </div>
-          <figcaption>招牌紙紮屋外觀</figcaption>
-        </figure>
-        <figure class="work">
-          <div class="frame" data-photo="img/photo3.jpg">
-            <img src="img/photo3.jpg" alt="照片3 屋內小家具特寫">
-            <div class="ph">
-              <span class="ph-num">照片3</span>
-              <span class="ph-cat">屋內小家具特寫</span>
-            </div>
-          </div>
-          <figcaption>屋內小家具特寫</figcaption>
-        </figure>
-        <figure class="work">
-          <div class="frame" data-photo="img/photo4.jpg">
-            <img src="img/photo4.jpg" alt="照片4 客製作品">
-            <div class="ph">
-              <span class="ph-num">照片4</span>
-              <span class="ph-cat">客製作品</span>
-            </div>
-          </div>
-          <figcaption>客製作品</figcaption>
-        </figure>
-        <figure class="work">
-          <div class="frame" data-photo="img/photo5.jpg">
-            <img src="img/photo5.jpg" alt="照片5 製作過程與工作室">
-            <div class="ph">
-              <span class="ph-num">照片5</span>
-              <span class="ph-cat">製作過程與工作室</span>
-            </div>
-          </div>
-          <figcaption>製作過程與工作室</figcaption>
-        </figure>
-        <figure class="work">
-          <div class="frame" data-photo="img/photo6.jpg">
-            <img src="img/photo6.jpg" alt="照片6 祭祀情境照">
-            <div class="ph">
-              <span class="ph-num">照片6</span>
-              <span class="ph-cat">祭祀情境照</span>
-            </div>
-          </div>
-          <figcaption>祭祀情境照</figcaption>
-        </figure>
-        <figure class="work">
-          <div class="frame" data-photo="img/photo7.jpg">
-            <img src="img/photo7.jpg" alt="照片7 選物站現貨">
-            <div class="ph">
-              <span class="ph-num">照片7</span>
-              <span class="ph-cat">選物站現貨</span>
-            </div>
-          </div>
-          <figcaption>選物站現貨</figcaption>
-        </figure>
+      <div class="works-stack">
+        <img src="img/work1.jpg" alt="花山紙紮作品">
+        <img src="img/work2.jpg" alt="花山紙紮作品">
+        <img src="img/work3.jpg" alt="花山紙紮作品">
+        <img src="img/work4.jpg" alt="花山紙紮作品">
+        <img src="img/work5.jpg" alt="花山紙紮作品">
+        <img src="img/work6.jpg" alt="花山紙紮作品">
       </div>
     </section>
 
@@ -412,19 +312,5 @@
     </footer>
   </div>
 
-  <script>
-    (function () {
-      document.querySelectorAll(".frame img").forEach(function (img) {
-        function ok() { img.classList.add("is-ok"); }
-        function miss() { img.classList.remove("is-ok"); }
-        img.addEventListener("load", ok);
-        img.addEventListener("error", miss);
-        if (img.complete) {
-          if (img.naturalWidth > 0) ok();
-          else miss();
-        }
-      });
-    })();
-  </script>
 </body>
 </html>
